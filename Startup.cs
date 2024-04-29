@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using MyCourse.Models.Services.Application;
+using MyCourse.Models.Services.Infrastractures;
 
 namespace MyCourse
 {
@@ -24,8 +25,14 @@ namespace MyCourse
             services.AddMvc();
 
             //registrazione del servizio di dependency a injection:
-            services.AddTransient<ICourseService, CourseService>(); 
+            //services.AddTransient<ICourseService, CourseService>(); 
             //quando un controller ha nel suo costruttore un oggetto di tipo ICourseService, crea un oggetto di tipo CourseService
+            services.AddTransient<ICourseService, AdoNetCourseService>(); 
+            //il servizio precedente (che implementava la logica in maniera random) 
+            //viene sostituito dal nuovo servizio che leggerà i dati da db
+            
+            services.AddTransient<IDatabaseAccessor, SqliteDatabaseAccessor>(); //dependency injection
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

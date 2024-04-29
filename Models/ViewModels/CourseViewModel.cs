@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data;
 using MyCourse.Models.ValueTypes;
+using MyCourse.Models.Services.Infrastractures;
+using MyCourse.Models.Enums;
 
 namespace MyCourse.Models.ViewModels
 {
@@ -16,5 +19,27 @@ namespace MyCourse.Models.ViewModels
         public double Rating {get; set;}
         public Money PrezzoFull {get; set;}
         public Money PrezzoScontato {get; set;}
+
+        public static CourseViewModel FromDataRow(DataRow courseRow)
+        {
+            var courseViewModel = new CourseViewModel
+            {
+            Titolo = Convert.ToString(courseRow["Title"]), //recupero il titolo dal db, leggendo la colonna Title
+            ImgPath = Convert.ToString(courseRow["ImagePath"]),
+            Autore = Convert.ToString(courseRow["Author"]),
+            Rating = Convert.ToDouble(courseRow["Rating"]),
+            PrezzoFull = new Money(
+                Enum.Parse<Currency>(Convert.ToString(courseRow["FullPrice_Currency"])),
+                Convert.ToDecimal(courseRow["FullPrice_Amount"])
+            ),
+            PrezzoScontato = new Money(
+                Enum.Parse<Currency>(Convert.ToString(courseRow["CurrentPrice_Currency"])),
+                Convert.ToDecimal(courseRow["CurrentPrice_Amount"])
+            ),
+            Id = Convert.ToInt32(courseRow["Id"])
+            };
+            return courseViewModel;
+
+        }
     }
 }
