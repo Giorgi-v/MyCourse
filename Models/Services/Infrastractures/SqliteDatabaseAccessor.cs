@@ -12,8 +12,18 @@ namespace MyCourse.Models.Services.Infrastractures
     //si connetterà al db ed eseguirà le query SQL
     public class SqliteDatabaseAccessor : IDatabaseAccessor
     {
-        public DataSet Query(string query)
+        public DataSet Query(FormattableString formattableQuery)
         {
+            var queryArguments = formattableQuery.GetArguments(); //recupero tutti i valori iniettati dall'applicazione nella query
+            var sqliteParameters = new List<SqliteParameter>();
+            for(var i=0; i<queryArguments.Lenght; i++)
+            {
+                var parameter = new SqliteParameter(i.ToString(), queryArguments[i]);
+                sqliteParameters.Add(parameter);
+                queryArguments[i] = "@"+i;  
+            }
+
+            string query = formattableQuery.ToString();
             //stabilisco connessione col db Sqlite MyCourse.db
             using(var conn = new SqliteConnection("Data Source=Data/MyCourse.db"))
             {

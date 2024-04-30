@@ -9,6 +9,6 @@ namespace MyCourse.Models.Services.Infrastractures
     //interfaccia che rappresenta il servizio infrastrutturale
     public interface IDatabaseAccessor
     {
-        DataSet Query(string query); //metodo che eseguirà una query SELECT passata come parametro
+        DataSet Query(FormattableString formattableQuery); //metodo che eseguirà una query SELECT passata come parametro
     }
 }
