@@ -35,10 +35,12 @@ namespace MyCourse.Models.Services.Infrastractures
 
                         var dataSet = new DataSet();
                         dataSet.EnforceConstraints = false;
+                        do
+                        {
                         var dataTable = new DataTable();
                         dataSet.Tables.Add(dataTable);
                         dataTable.Load(reader); //cosi evitiamo di leggere riga per riga i dati dalla tab risultante
-
+                        }while(!reader.IsClosed);
                         /*
                         while(reader.Read()) //devo leggere una riga per volta della tabella restituita
                         {

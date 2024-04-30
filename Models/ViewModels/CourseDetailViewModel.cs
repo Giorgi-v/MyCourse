@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data;
+using MyCourse.Models.ValueTypes;
+using MyCourse.Models.Enums;
 
 namespace MyCourse.Models.ViewModels
 {
@@ -18,6 +21,29 @@ namespace MyCourse.Models.ViewModels
             significa che se quello che c'è a sinistra è Null, allora restituisce 0
             altrimenti restituisce quello che c'è a sinistra (cioè la somma)
             */
+        }
+
+        public static new CourseDetailViewModel FromDataRow(DataRow courseRow)
+        {
+            var courseDetailViewModel = new CourseDetailViewModel{
+            Titolo = Convert.ToString(courseRow["Title"]), //recupero il titolo dal db, leggendo la colonna Title
+            Descrizione = Convert.ToString(courseRow["Description"]),
+            ImgPath = Convert.ToString(courseRow["ImagePath"]),
+            Autore = Convert.ToString(courseRow["Author"]),
+            Rating = Convert.ToDouble(courseRow["Rating"]),
+            PrezzoFull = new Money(
+                Enum.Parse<Currency>(Convert.ToString(courseRow["FullPrice_Currency"])),
+                Convert.ToDecimal(courseRow["FullPrice_Amount"])
+            ),
+            PrezzoScontato = new Money(
+                Enum.Parse<Currency>(Convert.ToString(courseRow["CurrentPrice_Currency"])),
+                Convert.ToDecimal(courseRow["CurrentPrice_Amount"])
+            ),
+            Id = Convert.ToInt32(courseRow["Id"]),
+            Lezioni = new List<LessonViewModel>()
+            };
+            return courseDetailViewModel;
+
         }
     }
 }

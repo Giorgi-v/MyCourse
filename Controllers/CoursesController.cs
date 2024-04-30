@@ -38,12 +38,10 @@ namespace MyCourse.Controllers
             //var courseService = new CourseService(); //invocazione del servizio
             //la creazione non serve più perchè tramite l'injection, asp.net core lo fa in automatico
             
-            /*
             CourseDetailViewModel viewModel = CourseService.GetCourse(id);
             ViewData["Title"] = viewModel.Titolo;
             return View(viewModel);
-            */
-            return View();
+            
             //return Content($"Sono Detail, ho ricevuto l'id {id}");
             //return Redirect("https://www.amazon.it/");
         }
