@@ -6,8 +6,6 @@ using MyCourse.Models.ViewModels;
 using System.Data;
 using System.Threading.Tasks;
 
-using MyCourse.Models.ViewModels;
-
 namespace MyCourse.Models.Services.Application
 {
     //servizio applicativo che ha il compito di recuperare dati dal database
