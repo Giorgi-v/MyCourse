@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace MyCourse.Models.Services.Infrastractures
+namespace MyCourse.Models.Services.Infrastracture
 {
     //interfaccia che rappresenta il servizio infrastrutturale
     public interface IDatabaseAccessor

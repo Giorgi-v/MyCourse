@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using Microsoft.Data.Sqlite;
-using MyCourse.Models.Services.Infrastractures;
+using MyCourse.Models.Services.Infrastracture;
 
-namespace MyCourse.Models.Services.Infrastractures
+namespace MyCourse.Models.Services.Infrastracture
 {
     //classe che implementerà concretamente il servizio infrastrutturale
     //si connetterà al db ed eseguirà le query SQL
