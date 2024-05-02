@@ -4,6 +4,7 @@ using System.Linq;
 using MyCourse.Models.Services.Infrastractures;
 using MyCourse.Models.ViewModels;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace MyCourse.Models.Services.Application
 {
@@ -16,10 +17,10 @@ namespace MyCourse.Models.Services.Application
         {
             this.db = db;
         }
-        public List<CourseViewModel> GetCourses()
+        public async Task<List<CourseViewModel>> GetCoursesAsync()
         {
             FormattableString query = $"SELECT Id, Title,ImagePath, Author,Rating,FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency  FROM Courses";
-            DataSet dataSet = db.Query(query);
+            DataSet dataSet = await db.QueryAsync(query);
             var dataTable = dataSet.Tables[0]; //recupera la prima tabella del dataSet
             var courseList = new List<CourseViewModel>(); //crea la lista di corsi da passare alla View
 
@@ -33,11 +34,11 @@ namespace MyCourse.Models.Services.Application
 
         }
 
-        public CourseDetailViewModel GetCourse(int id)
+        public async Task<CourseDetailViewModel> GetCourseAsync(int id)
         {
             FormattableString query = $@"SELECT Id, Title, Description, ImagePath, Author, Rating, FullPrice_Amount, FullPrice_Currency, CurrentPrice_Amount, CurrentPrice_Currency FROM Courses WHERE Id={id}
             ; SELECT Id, Title, Description, Duration FROM Lessons WHERE CourseId={id}"; //due query
-            DataSet dataSet = db.Query(query);
+            DataSet dataSet = await db.QueryAsync(query);
             var courseTable = dataSet.Tables[0]; //recupera la prima tabella del dataSet: i dati del corso
             
             //dato che la prima query mi ritorna esattamente una riga, controllo se effettivamente la tabella contiene una sola riga

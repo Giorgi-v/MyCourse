@@ -12,11 +12,11 @@ namespace MyCourse.Models.Services.Infrastractures
     //si connetterà al db ed eseguirà le query SQL
     public class SqliteDatabaseAccessor : IDatabaseAccessor
     {
-        public DataSet Query(FormattableString formattableQuery)
+        public async Task<DataSet> QueryAsync(FormattableString formattableQuery)
         {
             var queryArguments = formattableQuery.GetArguments(); //recupero tutti i valori iniettati dall'applicazione nella query
             var sqliteParameters = new List<SqliteParameter>();
-            for(var i=0; i<queryArguments.Lenght; i++)
+            for(var i=0; i<queryArguments.Length; i++)
             {
                 var parameter = new SqliteParameter(i.ToString(), queryArguments[i]);
                 sqliteParameters.Add(parameter);
@@ -27,12 +27,12 @@ namespace MyCourse.Models.Services.Infrastractures
             //stabilisco connessione col db Sqlite MyCourse.db
             using(var conn = new SqliteConnection("Data Source=Data/MyCourse.db"))
             {
-                conn.Open(); //apro la connessione: ADO.NET recupera una nuova connessione dal connection pool
+                await conn.OpenAsync(); //apro la connessione: ADO.NET recupera una nuova connessione dal connection pool
 
                 using(var cmd = new SqliteCommand(query, conn))
                 {   
                     //eseguo la query sul db
-                    using(var reader = cmd.ExecuteReader())
+                    using(var reader = await cmd.ExecuteReaderAsync())
                     {
                         //nuovo oggetto di tipo SqliteDataReader: eseguo query di tipo SELECT
                         //che restituisce una tabella di risultati
