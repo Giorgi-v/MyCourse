@@ -22,11 +22,11 @@ namespace MyCourse
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //registrazione del servizio di dependency a injection:
             //services.AddTransient<ICourseService, CourseService>(); 
-            //quando un controller ha nel suo costruttore un oggetto di tipo ICourseService, crea un oggetto di tipo CourseService
+            //quando un controller ha nel suo costruttore uççn oggetto di tipo ICourseService, crea un oggetto di tipo CourseService
             services.AddTransient<ICourseService, AdoNetCourseService>(); 
             //il servizio precedente (che implementava la logica in maniera random) 
             //viene sostituito dal nuovo servizio che leggerà i dati da db
